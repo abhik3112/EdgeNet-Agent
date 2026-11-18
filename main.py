@@ -1,4 +1,5 @@
 import time
+from typing import cast
 from rich.console import Console
 from rich.table import Table
 from rich.panel import Panel
@@ -18,7 +19,7 @@ class EdgeNetAgent:
         # 1. Ingest telemetry & run profiled inference
         data = self.telemetry.simulate_gateway_telemetry()
         profile_result = self.profiler.run_quantized_inference_simulation()
-        metrics = profile_result["edge_profile_metrics"]
+        metrics = cast(dict[str, float], profile_result["edge_profile_metrics"])
         
         # 2. Evaluate health
         health_check = GatewayTools.check_connection_health(
